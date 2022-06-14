@@ -58,19 +58,13 @@
       rightFollower.follow(rightFront); 
       drive.arcadeDrive(lateralTorque, forwardTorque);
 
-      //Solenoid 
-      if (controller.getLeftBumper()){
+      // solenoid
+      if (controller.getLeftBumperPressed()) {
+        compressor.enableDigital();
         solenoid.set(DoubleSolenoid.Value.kForward);
-      } else if (controller.getRightBumper()) {
+      } else if (controller.getLeftBumperReleased()) {
+        compressor.disable();
         solenoid.set(DoubleSolenoid.Value.kReverse); 
       }
-
-      if (controller.getAButton()){
-        compressor.enableDigital();
-      }else if (controller.getBButton()){
-        compressor.disable();
-      }
-
-
     } 
   } 
