@@ -11,4 +11,6 @@ public interface Constants {
     public final double MAX_SPEED = 1.0; 
     public final double MIN_SPEED = 0.0; 
     public final double FORWARD = 0.0; 
-}
+    public final int FORWARD_CHANNEL = 0; 
+    public final int REVERSE_CHANNEL = 1;  
+}   
