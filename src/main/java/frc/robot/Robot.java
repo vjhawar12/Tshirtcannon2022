@@ -2,7 +2,6 @@
 
   import edu.wpi.first.wpilibj.TimedRobot;
 
-  import com.ctre.phoenix.motorcontrol.ControlMode; 
   import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
   import edu.wpi.first.wpilibj.XboxController;
   import edu.wpi.first.wpilibj.Timer;
@@ -10,7 +9,8 @@
   import edu.wpi.first.wpilibj.Compressor; 
   import edu.wpi.first.wpilibj.DoubleSolenoid; 
   import edu.wpi.first.wpilibj.PneumaticsModuleType; 
-  import edu.wpi.first.wpilibj.GenericHID;
+  import edu.wpi.first.wpilibj.GenericHID;  
+  import edu.wpi.first.wpilibj.DigitalInput; 
 
   public class Robot extends TimedRobot implements Constants {
     protected Timer timer; 
@@ -21,9 +21,16 @@
     protected final WPI_VictorSPX rightFollower = new WPI_VictorSPX(RIGHT_FOLLOWER); 
     protected final WPI_VictorSPX leftFollower = new WPI_VictorSPX(LEFT_FOLLOWER); 
 
-    private final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
-    private final DoubleSolenoid solenoid =  new DoubleSolenoid(PneumaticsModuleType.CTREPCM, 0, 1); 
+    protected final DigitalInput forwardInput = new DigitalInput(FORWARD_CHANNEL); 
+    protected final DigitalInput reverseInput = new DigitalInput(REVERSE_CHANNEL); 
 
+    private final Compressor compressor = new Compressor(PneumaticsModuleType.CTREPCM);
+
+    private final DoubleSolenoid solenoid = new DoubleSolenoid(
+      PneumaticsModuleType.CTREPCM, 
+      Constants.FORWARD_CHANNEL, 
+      Constants.REVERSE_CHANNEL
+    ); 
 
     DifferentialDrive drive = new DifferentialDrive(leftFront, rightFront); 
 
@@ -47,7 +54,6 @@
     public void teleopInit() {
       forwardTorque = 0; 
       lateralTorque = 0; 
-      compressor.disable();
     }
 
     @Override
@@ -59,12 +65,18 @@
       drive.arcadeDrive(lateralTorque, forwardTorque);
 
       // solenoid
+      /* 
       if (controller.getLeftBumperPressed()) {
-        compressor.enableDigital();
         solenoid.set(DoubleSolenoid.Value.kForward);
       } else if (controller.getLeftBumperReleased()) {
-        compressor.disable();
-        solenoid.set(DoubleSolenoid.Value.kReverse); 
+        solenoid.set(DoubleSolenoid.Value.kOff); 
       }
+
+      if (controller.getRightBumperPressed()) {
+        solenoid.set(DoubleSolenoid.Value.kReverse); 
+      } else if (controller.getRightBumperReleased()) {
+        solenoid.set(DoubleSolenoid.Value.kOff); 
+      }
+      */ 
     } 
   } 
