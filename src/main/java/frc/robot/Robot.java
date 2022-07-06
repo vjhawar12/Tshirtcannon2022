@@ -65,7 +65,6 @@
       drive.arcadeDrive(lateralTorque, forwardTorque);
 
       // solenoid
-      /* 
       if (controller.getLeftBumperPressed()) {
         solenoid.set(DoubleSolenoid.Value.kForward);
       } else if (controller.getLeftBumperReleased()) {
@@ -76,7 +75,6 @@
         solenoid.set(DoubleSolenoid.Value.kReverse); 
       } else if (controller.getRightBumperReleased()) {
         solenoid.set(DoubleSolenoid.Value.kOff); 
-      }
-      */ 
+      } 
     } 
   } 
